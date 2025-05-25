@@ -10,6 +10,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { User } from '../../../models/user';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
+import { LoadingService } from '../../../services/loading/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -55,16 +57,23 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     if (this.loginForm.valid) {
       let userloginData = { ...this.loginForm.value };
-      this.authService.userLogin(userloginData).subscribe((res: User[]) => {
-        if (res.length === 0) {
-          this.info.nativeElement.innerText = 'Invalid credentials';
-          timer(1000).subscribe(() => {
-            this.info.nativeElement.innerText = '';
-          });
-        } else {
-          this.authService.isUserAuthenticated$.next(true);
-          this.router.navigate(['home']);
-        }
+      this.loadingService.show();
+      // this.authService.userLogin(userloginData).subscribe((res: User[]) => {
+      //   if (res.length === 0) {
+      //     this.info.nativeElement.innerText = 'Invalid credentials';
+      //     timer(1000).subscribe(() => {
+      //       this.info.nativeElement.innerText = '';
+      //     });
+      //   } else {
+      //     this.authService.isUserAuthenticated$.next(true);
+      //     this.router.navigate(['home']);
+      //   }
+      // });
+      //
+      timer(2000).subscribe(() => {
+        //this.authService.isUserAuthenticated$.next(true);
+        //this.router.navigate(['home']);
+        //this.loadingService.hide();
       });
     } else {
       this.loginForm.markAllAsTouched();

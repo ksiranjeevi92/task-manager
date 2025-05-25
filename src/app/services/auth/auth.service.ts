@@ -10,7 +10,7 @@ type UserLogin = Omit<User, 'id'>;
   providedIn: 'root',
 })
 export class AuthService {
-  isUserAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  isUserAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   private readonly apiUrl: string = environment.baseUrl + '/users';
 
