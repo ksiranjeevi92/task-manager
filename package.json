@@ -1,14 +1,15 @@
 {
   "name": "task-manager",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
+    "start:server": "./node_modules/json-server/lib/bin.js --watch db.json --port 3000 --host 127.0.0.1",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",
@@ -17,6 +18,9 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "bootstrap": "5.3.6",
+    "bootstrap-icons": "^1.13.1",
+    "json-server": "^1.0.0-beta.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -33,5 +37,10 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.7.2"
-  }
+  },
+  "description": "Siemens Healthineers Task Manager advance GUI",
+  "main": "main.ts",
+  "repository": "https://github.com/ksiranjeevi92/task-manager",
+  "author": "siranjeevi kubermani",
+  "license": "MIT"
 }
