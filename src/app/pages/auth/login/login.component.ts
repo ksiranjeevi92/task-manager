@@ -71,9 +71,9 @@ export class LoginComponent implements OnInit {
       // });
       //
       timer(2000).subscribe(() => {
-        //this.authService.isUserAuthenticated$.next(true);
-        //this.router.navigate(['home']);
-        //this.loadingService.hide();
+        this.authService.isUserAuthenticated$.next(true);
+        this.router.navigate(['home']);
+        this.loadingService.hide();
       });
     } else {
       this.loginForm.markAllAsTouched();

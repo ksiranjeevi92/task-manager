@@ -16,6 +16,13 @@
     },
     {
       "id": 2,
+      "title": "Reading",
+      "description": "",
+      "status": "Open",
+      "dueDate": "2025-05-27"
+    },
+    {
+      "id": 3,
       "title": "1 Hr reading",
       "description": "Description",
       "status": "Completed",

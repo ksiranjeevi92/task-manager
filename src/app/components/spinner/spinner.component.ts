@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingService } from '../../services/loading/loading.service';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-spinner',
@@ -8,8 +9,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.scss',
 })
-export class SpinnerComponent {
-  private loadingService = Inject(LoadingService);
+export class SpinnerComponent implements OnInit {
+  constructor(private loadingService: LoadingService) {}
 
-  isLoading$ = this.loadingService.isLoading$;
+  isLoading$!: Observable<boolean>;
+
+  ngOnInit(): void {
+    this.isLoading$ = this.loadingService.isLoading$;
+  }
 }
