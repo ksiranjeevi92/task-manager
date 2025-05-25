@@ -12,14 +12,14 @@
       "title": "Walk for 1km",
       "description": "Description",
       "status": "Open",
-      "dueDate": "25/05/2025"
+      "dueDate": "2025-05-27"
     },
     {
       "id": 2,
       "title": "1 Hr reading",
       "description": "Description",
       "status": "Completed",
-      "dueDate": "25/05/2025"
+      "dueDate": "2025-05-27"
     }
   ]
 }
