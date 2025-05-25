@@ -1,0 +1,48 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title">Create New Task</h5>
+    <form [formGroup]="taskForm" (ngSubmit)="createTask()">
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input
+          formControlName="title"
+          type="text"
+          class="form-control"
+          name="title"
+        />
+        @if(title?.touched && title?.invalid){ @if(title?.errors?.['required']){
+        <small class="text-danger">Title is required</small>
+        } }
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea
+          formControlName="description"
+          class="form-control"
+          rows="2"
+          name="description"
+        ></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Due Date</label>
+        <input
+          formControlName="dueDate"
+          type="date"
+          class="form-control"
+          name="dueDate"
+        />
+        @if(dueDate?.touched && dueDate?.invalid){
+        @if(dueDate?.errors?.['required']){
+        <small class="text-danger">Due Date is required</small>
+        } }
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">
+        <i class="bi bi-plus-circle me-1"></i>
+        {{ isEditMode ? "Edit" : "Create" }} Task
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,1 +1,29 @@
-<p>task-board works!</p>
+<div class="container-fluid h-100 overflow-hidden">
+  <div class="row h-100">
+    <div class="col-12 col-md-2 border-end p-2 y-overflow-auto">
+      <app-create-task (taskCreated)="addTask($event)"></app-create-task>
+    </div>
+
+    <div class="col-12 col-md-5 border-end p-2 y-overflow-auto">
+      <p>Open Tasks</p>
+      @for(task of tasks; track task.id){ @if(task.status === "Open"){
+      <app-task-card
+        [task]="task"
+        (toggleStatus)="onToggleTaskStatus($event)"
+        (editTask)="onEditTask($event)"
+      ></app-task-card>
+      } }
+    </div>
+
+    <div class="col-12 col-md-5 p-2 y-overflow-auto">
+      <p>Completed Tasks</p>
+      @for(task of tasks; track task.id){ @if(task.status === "Completed"){
+      <app-task-card
+        [task]="task"
+        (toggleStatus)="onToggleTaskStatus($event)"
+        (editTask)="onEditTask($event)"
+      ></app-task-card>
+      } }
+    </div>
+  </div>
+</div>

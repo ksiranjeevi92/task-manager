@@ -6,5 +6,20 @@
       "password": "password"
     }
   ],
-  "tasks": []
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Walk for 1km",
+      "description": "Description",
+      "status": "Open",
+      "dueDate": "25/05/2025"
+    },
+    {
+      "id": 2,
+      "title": "1 Hr reading",
+      "description": "Description",
+      "status": "Completed",
+      "dueDate": "25/05/2025"
+    }
+  ]
 }
