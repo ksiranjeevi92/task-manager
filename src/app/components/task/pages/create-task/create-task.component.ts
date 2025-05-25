@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Task } from '../../../../models/task';
 import {
   FormBuilder,
@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TaskService } from '../../../../services/task/task.service';
 
 @Component({
   selector: 'app-create-task',
@@ -15,17 +16,21 @@ import {
   styleUrl: './create-task.component.scss',
 })
 export class CreateTaskComponent implements OnInit {
-  @Input('isEditMode')
   isEditMode: boolean = false;
 
   @Output() taskCreated = new EventEmitter<Task>();
 
   taskForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.buildTaskForm();
+    this.taskService.taskDataToEdit$.subscribe((data: Task) => {
+      this.isEditMode = true;
+      this.taskForm.reset();
+      this.taskForm.setValue({ ...data });
+    });
   }
 
   private buildTaskForm(): void {
@@ -53,6 +58,7 @@ export class CreateTaskComponent implements OnInit {
     if (this.taskForm.valid) {
       this.taskCreated.emit({ ...this.taskForm.value });
       this.resetForm();
+      this.isEditMode = false;
     } else {
       this.taskForm.markAllAsTouched();
     }
@@ -71,6 +77,6 @@ export class CreateTaskComponent implements OnInit {
   }
 
   private genId(): number {
-    return Math.floor(Math.random() * 1000);
+    return Date.now();
   }
 }

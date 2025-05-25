@@ -4,6 +4,7 @@ import { Task, TaskStatus } from '../../models/task';
 import { CreateTaskComponent } from '../../components/task/pages/create-task/create-task.component';
 
 import db from '../../../../db.json';
+import { TaskService } from '../../services/task/task.service';
 
 @Component({
   selector: 'app-task-board',
@@ -14,7 +15,7 @@ import db from '../../../../db.json';
 export class TaskBoardComponent implements OnInit {
   tasks: Task[] = [];
 
-  constructor() {}
+  constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.tasks = db.tasks.map((task) => {
@@ -26,7 +27,16 @@ export class TaskBoardComponent implements OnInit {
   }
 
   addTask(task: Task) {
-    this.tasks.unshift(task);
+    let existingtaskIdx = this.tasks.findIndex(
+      (existingTask) => existingTask.id === task.id
+    );
+    console.log(this.tasks);
+    console;
+    if (existingtaskIdx !== -1) {
+      this.tasks[existingtaskIdx] = { ...task };
+    } else {
+      this.tasks.unshift(task);
+    }
   }
 
   onToggleTaskStatus(taskId: number): void {
@@ -44,5 +54,8 @@ export class TaskBoardComponent implements OnInit {
 
   onEditTask(taskId: number): void {
     let task = this.tasks.find((task) => task.id === taskId);
+    if (task) {
+      this.taskService.taskDataToEdit$.next(task);
+    }
   }
 }
