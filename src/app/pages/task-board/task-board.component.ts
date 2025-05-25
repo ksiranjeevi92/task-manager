@@ -58,4 +58,8 @@ export class TaskBoardComponent implements OnInit {
       this.taskService.taskDataToEdit$.next(task);
     }
   }
+
+  onDeleteTask(taskId: number): void {
+    this.tasks = this.tasks.filter((task) => task.id !== taskId);
+  }
 }
