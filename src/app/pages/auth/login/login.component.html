@@ -1,48 +1,50 @@
-<div class="wv-100 vh-100">
-  <div
-    class="position-absolute top-50 start-50 translate-middle border border-1 p-3 login-page rounded"
-  >
-    <p class="h2">User Login</p>
-    <form [formGroup]="loginForm">
-      <div class="row mb-3">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
-          <input
-            formControlName="email"
-            type="email"
-            class="form-control"
-            id="inputEmail3"
-          />
-          @if(email?.touched && email?.invalid){
-          @if(email?.errors?.['required']){
-          <small>Email is required</small>
-          } @if(email?.errors?.['email']){
-          <small>Enter a valid Email</small>
-          } }
+<div
+  class="container-fluid vh-100 d-flex align-items-center justify-content-center"
+>
+  <div class="w-100 login-page">
+    <div class="border p-4 rounded shadow-sm bg-white">
+      <p class="h2">User Login</p>
+      <form [formGroup]="loginForm">
+        <div class="row mb-3">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control"
+              id="inputEmail3"
+            />
+            @if(email?.touched && email?.invalid){
+            @if(email?.errors?.['required']){
+            <small>Email is required</small>
+            } @if(email?.errors?.['email']){
+            <small>Enter a valid Email</small>
+            } }
+          </div>
         </div>
-      </div>
-      <div class="row mb-3">
-        <label for="inputPassword3" class="col-sm-2 col-form-label"
-          >Password</label
-        >
-        <div class="col-sm-10">
-          <input
-            formControlName="password"
-            type="password"
-            class="form-control"
-            id="inputPassword3"
-          />
-          @if(password?.touched && password?.invalid){
-          @if(password?.errors?.['required']){
-          <small>Password is required</small>
-          } }
+        <div class="row mb-3">
+          <label for="inputPassword3" class="col-sm-2 col-form-label"
+            >Password</label
+          >
+          <div class="col-sm-10">
+            <input
+              formControlName="password"
+              type="password"
+              class="form-control"
+              id="inputPassword3"
+            />
+            @if(password?.touched && password?.invalid){
+            @if(password?.errors?.['required']){
+            <small>Password is required</small>
+            } }
+          </div>
         </div>
-      </div>
-      <button (click)="onSubmit()" type="submit" class="btn btn-primary">
-        Sign in</button
-      >&nbsp;
-      <button class="btn btn btn-secondary">Cancel</button>
-    </form>
-    <div #info></div>
+        <button (click)="onSubmit()" type="submit" class="btn btn-primary">
+          Sign in</button
+        >&nbsp;
+        <button class="btn btn btn-secondary">Cancel</button>
+      </form>
+      <div #info></div>
+    </div>
   </div>
 </div>
