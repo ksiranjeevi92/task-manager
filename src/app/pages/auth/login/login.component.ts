@@ -6,7 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../../../services/auth/auth.service';
+import {
+  AuthService,
+  TokenResponse,
+} from '../../../services/auth/auth.service';
 import { User } from '../../../models/user';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
@@ -42,7 +45,7 @@ export class LoginComponent implements OnInit {
         Validators.required,
         Validators.email,
       ]),
-      password: new FormControl('Password@12345', [Validators.required]),
+      password: new FormControl('password', [Validators.required]),
     });
   }
 
@@ -58,22 +61,27 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       let userloginData = { ...this.loginForm.value };
       this.loadingService.show();
-      // this.authService.userLogin(userloginData).subscribe((res: User[]) => {
-      //   if (res.length === 0) {
-      //     this.info.nativeElement.innerText = 'Invalid credentials';
-      //     timer(1000).subscribe(() => {
-      //       this.info.nativeElement.innerText = '';
-      //     });
-      //   } else {
-      //     this.authService.isUserAuthenticated$.next(true);
-      //     this.router.navigate(['home']);
-      //   }
-      // });
-      //
-      timer(2000).subscribe(() => {
-        this.authService.isUserAuthenticated$.next(true);
-        this.router.navigate(['home']);
-        this.loadingService.hide();
+      this.authService.userLogin(userloginData).subscribe({
+        next: (res: TokenResponse) => {
+          this.authService.setToken(res.token);
+          this.router.navigate(['home']);
+          this.loadingService.hide();
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.info.nativeElement.innerText = 'Invalid credentials';
+            timer(1000).subscribe(() => {
+              this.info.nativeElement.innerText = '';
+            });
+          } else {
+            this.info.nativeElement.innerText =
+              'Server error. Please try again.';
+            timer(1000).subscribe(() => {
+              this.info.nativeElement.innerText = '';
+            });
+          }
+          this.loadingService.hide();
+        },
       });
     } else {
       this.loginForm.markAllAsTouched();

@@ -15,12 +15,11 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.isUserAuthenticated$.subscribe((result: boolean) => {
-      if (!result) {
-        this.router.navigate(['/auth/login']);
-      } else {
-        this.router.navigate(['/home']);
-      }
-    });
+    const token: string | null = this.authService.getToken();
+    if (token) {
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
   }
 }

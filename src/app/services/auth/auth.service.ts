@@ -6,18 +6,35 @@ import { environment } from '../../../environments/environment';
 
 type UserLogin = Omit<User, 'id'>;
 
+export type TokenResponse = { token: string };
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly tokenKey = 'auth_token';
   isUserAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  private readonly apiUrl: string = environment.baseUrl + '/users';
+  private readonly apiUrl: string = environment.baseUrl;
 
   constructor(private http: HttpClient) {}
 
-  public userLogin(userDetails: UserLogin): Observable<User[]> {
-    const url = `${this.apiUrl}?email=${userDetails.email}`;
-    return this.http.get<User[]>(url);
+  public userLogin(userDetails: UserLogin): Observable<TokenResponse> {
+    const url = `${this.apiUrl}/login`;
+    return this.http.post<TokenResponse>(url, userDetails);
+  }
+
+  public setToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+    this.isUserAuthenticated$.next(true);
+  }
+
+  public getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  public clearToken(): void {
+    localStorage.removeItem(this.tokenKey);
+    this.isUserAuthenticated$.next(false);
   }
 }
